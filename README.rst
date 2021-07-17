@@ -1,4 +1,4 @@
-Wikipedia
+Wikipedia (with TorPy)
 =========
 
 .. image:: https://travis-ci.org/goldsmith/Wikipedia.png?branch=master
