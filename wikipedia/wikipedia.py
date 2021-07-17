@@ -734,8 +734,27 @@ def _wiki_request(params):
 
     wait_time = (RATE_LIMIT_LAST_CALL + RATE_LIMIT_MIN_WAIT) - datetime.now()
     time.sleep(int(wait_time.total_seconds()))
+    
+    
+    with TorClient() as tor:
+      with tor.get_guard() as guard:
+          adapter = TorHttpAdapter(guard, 3)
+          with requests.Session() as sess:
+              sess.headers.update({'User-Agent': 'Mozilla/5.0'})
+              sess.mount('http://', adapter)
+              sess.mount('https://', adapter)
 
-  r = requests.get(API_URL, params=params, headers=headers)
+
+              try:
+                r = sess.get(API_URL, params=params, headers=headers)
+              except:
+                return "" 
+              #print(i)            
+              txt = r.text
+              
+         
+              
+  #r = requests.get(API_URL, params=params, headers=headers)
 
   if RATE_LIMIT:
     RATE_LIMIT_LAST_CALL = datetime.now()
