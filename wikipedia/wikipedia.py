@@ -5,6 +5,10 @@ import time
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from decimal import Decimal
+from torpy import TorClient
+from torpy.utils import recv_all
+from torpy.http import requests
+from torpy.http.adapter import TorHttpAdapter
 
 from .exceptions import (
   PageError, DisambiguationError, RedirectError, HTTPTimeoutError,
